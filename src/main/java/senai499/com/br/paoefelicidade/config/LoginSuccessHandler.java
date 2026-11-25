@@ -1,4 +1,6 @@
+
 package senai499.com.br.paoefelicidade.config;
+
 import java.io.IOException;
 
 import jakarta.servlet.ServletException;
@@ -14,14 +16,11 @@ import senai499.com.br.paoefelicidade.model.UsuariosModel;
 import senai499.com.br.paoefelicidade.repository.UsuariosRepository;
 
 @Component
-public class LoginSuccessHandler
-        implements AuthenticationSuccessHandler {
+public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private final UsuariosRepository usuariosRepository;
 
-    public LoginSuccessHandler(
-            UsuariosRepository usuariosRepository) {
-
+    public LoginSuccessHandler(UsuariosRepository usuariosRepository) {
         this.usuariosRepository = usuariosRepository;
     }
 
@@ -48,8 +47,8 @@ public class LoginSuccessHandler
 
         String destino = switch (usuario.getPerfil()) {
             case ADMIN -> "/dashboard";
-            case FUNCIONARIO -> "/funcionario";
-            default -> "/";
+            case FUNCIONARIO -> "/funcionario/painel";
+            case CLIENTE -> "/cliente/painel";
         };
 
         response.sendRedirect(

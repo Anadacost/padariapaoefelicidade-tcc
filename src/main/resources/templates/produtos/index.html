@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Produtos | Pão e Felicidade</title>
+
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<main class="container py-4">
+
+    <!-- CABEÇALHO -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+
+        <div>
+            <h2 class="fw-bold">Produtos</h2>
+            <p class="text-muted mb-0">
+                Gerencie os produtos da padaria.
+            </p>
+        </div>
+
+        <a th:href="@{/produtos/cadastro}" class="btn btn-primary">
+            + Novo produto
+        </a>
+
+    </div>
+
+    <!-- MENSAGENS -->
+    <div class="alert alert-success"
+         th:if="${sucesso}"
+         th:text="${sucesso}">
+    </div>
+
+    <div class="alert alert-danger"
+         th:if="${erro}"
+         th:text="${erro}">
+    </div>
+
+    <!-- PESQUISA -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+
+            <form th:action="@{/produtos}" method="get"
+                  class="row g-2 align-items-end">
+
+                <div class="col-md-9">
+                    <label class="form-label">Pesquisar produto</label>
+
+                    <input type="text"
+                           name="busca"
+                           class="form-control"
+                           placeholder="Digite o nome ou a categoria..."
+                           th:value="${busca}">
+                </div>
+
+                <div class="col-md-3 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        Pesquisar
+                    </button>
+
+                    <a th:href="@{/produtos}"
+                       class="btn btn-outline-secondary">
+                        Limpar
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <!-- TABELA DE PRODUTOS -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">Produtos cadastrados</h5>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+                    <tr>
+                        <th>Produto</th>
+                        <th>Categoria</th>
+                        <th>Preço</th>
+                        <th>Estoque</th>
+                        <th>Status</th>
+                        <th class="text-center">Ações</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="produto : ${produtos}">
+
+                        <td>
+                            <strong th:text="${produto.nome}"></strong>
+                        </td>
+
+                        <td th:text="${produto.categoria}"></td>
+
+                        <td th:text="${#numbers.formatCurrency(produto.preco)}"></td>
+
+                        <td th:text="${produto.quantidadeEstoque}"></td>
+
+                        <td>
+                                <span th:if="${produto.ativo}"
+                                      class="badge bg-success">
+                                    Ativo
+                                </span>
+
+                            <span th:unless="${produto.ativo}"
+                                  class="badge bg-secondary">
+                                    Inativo
+                                </span>
+                        </td>
+
+                        <td>
+                            <div class="d-flex justify-content-center flex-wrap gap-1">
+
+                                <!-- DETALHES -->
+                                <a th:href="@{/produtos/detalhes/{id}(id=${produto.id})}"
+                                   class="btn btn-sm btn-outline-info">
+                                    Detalhes
+                                </a>
+
+                                <!-- EDITAR -->
+                                <a th:href="@{/produtos/editar/{id}(id=${produto.id})}"
+                                   class="btn btn-sm btn-outline-primary">
+                                    Editar
+                                </a>
+
+                                <!-- INATIVAR -->
+                                <form th:if="${produto.ativo}"
+                                      th:action="@{/produtos/inativar/{id}(id=${produto.id})}"
+                                      method="post">
+
+                                    <input type="hidden"
+                                           th:name="${_csrf.parameterName}"
+                                           th:value="${_csrf.token}">
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Deseja realmente inativar este produto?')">
+                                        Inativar
+                                    </button>
+
+                                </form>
+
+                                <!-- ATIVAR -->
+                                <form th:unless="${produto.ativo}"
+                                      th:action="@{/produtos/ativar/{id}(id=${produto.id})}"
+                                      method="post">
+
+                                    <input type="hidden"
+                                           th:name="${_csrf.parameterName}"
+                                           th:value="${_csrf.token}">
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-outline-success">
+                                        Ativar
+                                    </button>
+
+                                </form>
+
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <!-- LISTA VAZIA -->
+                    <tr th:if="${#lists.isEmpty(produtos)}">
+                        <td colspan="6" class="text-center py-4 text-muted">
+                            Nenhum produto encontrado.
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a th:href="@{/funcionario/painel}"
+           class="btn btn-outline-secondary">
+            Voltar ao painel
+        </a>
+    </div>
+
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

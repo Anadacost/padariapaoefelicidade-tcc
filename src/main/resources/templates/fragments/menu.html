@@ -72,14 +72,14 @@
                 <li class="nav-item"
                     sec:authorize="hasRole('FUNCIONARIO')">
 
-                    <a class="nav-link" th:href="@{/funcionario}">
+                    <a class="nav-link" th:href="@{/funcionario/painel}">
                         Área do funcionário
                     </a>
                 </li>
 
             </ul>
 
-            <!-- NÃO AUTENTICADO -->
+            <!-- VISITANTE NÃO AUTENTICADO -->
             <div sec:authorize="!isAuthenticated()">
 
                 <a class="btn btn-login-menu"
@@ -89,7 +89,7 @@
 
             </div>
 
-            <!-- AUTENTICADO -->
+            <!-- USUÁRIO AUTENTICADO -->
             <div sec:authorize="isAuthenticated()"
                  class="dropdown">
 
@@ -109,35 +109,57 @@
                 <ul class="dropdown-menu dropdown-menu-end"
                     aria-labelledby="menuUsuario">
 
-                    <!-- CLIENTE -->
+                    <!-- MENU ADMINISTRADOR -->
+                    <li sec:authorize="hasRole('ADMIN')">
+
+                        <a class="dropdown-item"
+                           th:href="@{/dashboard}">
+                            Painel administrativo
+                        </a>
+
+                    </li>
+
+                    <!-- MENU FUNCIONÁRIO -->
+                    <li sec:authorize="hasRole('FUNCIONARIO')">
+
+                        <a class="dropdown-item"
+                           th:href="@{/funcionario/painel}">
+                            Painel do funcionário
+                        </a>
+
+                    </li>
+
+                    <li sec:authorize="hasRole('FUNCIONARIO')">
+                        <a class="dropdown-item"
+                           th:href="@{/funcionario/perfil}">
+                            Meu perfil
+                        </a>
+                    </li>
+
+                    <li sec:authorize="hasRole('FUNCIONARIO')">
+                        <a class="dropdown-item"
+                           th:href="@{/funcionario/senha}">
+                            Alterar senha
+                        </a>
+                    </li>
+
+                    <!-- MENU CLIENTE -->
                     <li sec:authorize="hasRole('CLIENTE')">
+
                         <a class="dropdown-item"
                            th:href="@{/cliente/painel}">
                             Meu painel
                         </a>
+
                     </li>
 
                     <li sec:authorize="hasRole('CLIENTE')">
+
                         <a class="dropdown-item"
                            th:href="@{/cliente/pedidos}">
                             Meus pedidos
                         </a>
-                    </li>
 
-                    <!-- ADMIN -->
-                    <li sec:authorize="hasRole('ADMIN')">
-                        <a class="dropdown-item"
-                           th:href="@{/dashboard}">
-                            Administração
-                        </a>
-                    </li>
-
-                    <!-- FUNCIONÁRIO -->
-                    <li sec:authorize="hasRole('FUNCIONARIO')">
-                        <a class="dropdown-item"
-                           th:href="@{/funcionario}">
-                            Painel do funcionário
-                        </a>
                     </li>
 
                     <li>

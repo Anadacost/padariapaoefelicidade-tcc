@@ -1,7 +1,5 @@
+
 package senai499.com.br.paoefelicidade.config;
-
-
-
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,11 +42,28 @@ public class SecurityConfig {
                                 "/",
                                 "/index",
                                 "/login",
+                                "/cadastro",
+                                "/cliente/cadastro",
+                                "/acesso-negado",
+
+                                // Arquivos CSS, JavaScript e imagens
                                 "/css/**",
                                 "/js/**",
                                 "/img/**",
                                 "/images/**",
-                                "/favicon.ico"
+                                "/favicon.ico",
+                                "/uploads/produtos/**"
+                        ).permitAll()
+
+                        // ==========================================
+                        // CATÁLOGO E SERVIÇOS PÚBLICOS
+                        // ==========================================
+
+                        .requestMatchers(
+                                "/catalogo",
+                                "/catalogo/**",
+                                "/servicos",
+                                "/servicos/**"
                         ).permitAll()
 
                         // ==========================================
@@ -59,12 +74,27 @@ public class SecurityConfig {
                                 "/dashboard",
                                 "/dashboard/**",
                                 "/admin/funcionarios",
-                                "/admin/funcionarios/**"
+                                "/admin/funcionarios/**",
+                                "/admin/vendas",
+                                "/admin/vendas/**"
                         ).hasRole("ADMIN")
 
                         // ==========================================
+                        // PRODUTOS
+                        // ADMINISTRADOR E FUNCIONÁRIO
+                        // ==========================================
+
+                        .requestMatchers(
+                                "/produtos",
+                                "/produtos/**",
+                                "/admin/produtos",
+                                "/admin/produtos/**",
+                                "/funcionario/produtos",
+                                "/funcionario/produtos/**"
+                        ).hasAnyRole("ADMIN", "FUNCIONARIO")
+
+                        // ==========================================
                         // ÁREA DO FUNCIONÁRIO
-                        // ADMIN E FUNCIONARIO
                         // ==========================================
 
                         .requestMatchers(
@@ -72,29 +102,28 @@ public class SecurityConfig {
                                 "/funcionario/**"
                         ).hasAnyRole("ADMIN", "FUNCIONARIO")
 
-
                         // ==========================================
-                        // AGENDAMENTOS E ATENDIMENTOS
-                        // ==========================================
-
-                        .requestMatchers(
-                                "/agendamentos",
-                                "/agendamentos/**",
-                                "/atendimentos",
-                                "/atendimentos/**"
-                        ).hasAnyRole("ADMIN", "FUNCIONARIO")
-
-                        // ==========================================
-                        // SERVIÇOS DA CLÍNICA
+                        // PEDIDOS
+                        // ADMINISTRADOR E FUNCIONÁRIO
                         // ==========================================
 
                         .requestMatchers(
-                                "/servicos",
-                                "/servicos/**"
+                                "/pedidos",
+                                "/pedidos/**"
                         ).hasAnyRole("ADMIN", "FUNCIONARIO")
+
+                        // ==========================================
+                        // ÁREA DO CLIENTE
+                        // ==========================================
+
+                        .requestMatchers(
+                                "/cliente",
+                                "/cliente/**"
+                        ).hasRole("CLIENTE")
 
                         // ==========================================
                         // PERFIL E ALTERAÇÃO DE SENHA
+                        // TODOS OS USUÁRIOS AUTENTICADOS
                         // ==========================================
 
                         .requestMatchers(

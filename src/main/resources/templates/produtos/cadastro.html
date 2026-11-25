@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Cadastro de produtos da padaria">
+    <title>Cadastrar Produto | Pão e Felicidade</title>
+
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+
+<!-- MENU -->
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<main class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Cadastrar Produto</h2>
+            <p class="text-muted mb-0">
+                Preencha os dados para adicionar um produto à loja.
+            </p>
+        </div>
+
+        <a th:href="@{/produtos}" class="btn btn-outline-secondary">
+            Voltar para produtos
+        </a>
+    </div>
+
+    <!-- MENSAGENS -->
+    <div th:if="${sucesso}" class="alert alert-success" role="alert"
+         th:text="${sucesso}"></div>
+
+    <div th:if="${erro}" class="alert alert-danger" role="alert"
+         th:text="${erro}"></div>
+
+    <!-- FORMULÁRIO -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            <form th:action="@{/produtos/salvar}"
+                  th:object="${produto}"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                <!-- TOKEN DE SEGURANÇA -->
+                <input type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}">
+
+                <div class="row g-3">
+
+                    <!-- NOME -->
+                    <div class="col-md-8">
+                        <label for="nome" class="form-label fw-semibold">
+                            Nome do produto *
+                        </label>
+
+                        <input type="text"
+                               class="form-control"
+                               id="nome"
+                               th:field="*{nome}"
+                               maxlength="150"
+                               placeholder="Ex.: Pão francês"
+                               required>
+                    </div>
+
+                    <!-- CATEGORIA -->
+                    <div class="col-md-4">
+                        <label for="categoria" class="form-label fw-semibold">
+                            Categoria *
+                        </label>
+
+                        <select class="form-select"
+                                id="categoria"
+                                th:field="*{categoria}"
+                                required>
+
+                            <option value="">Selecione uma categoria</option>
+                            <option value="Pães">Pães</option>
+                            <option value="Bolos e Doces">Bolos e Doces</option>
+                            <option value="Salgados">Salgados</option>
+                            <option value="Bebidas">Bebidas</option>
+                            <option value="Lanches">Lanches</option>
+                            <option value="Confeitaria">Confeitaria</option>
+                            <option value="Outros">Outros</option>
+
+                        </select>
+                    </div>
+
+                    <!-- DESCRIÇÃO -->
+                    <div class="col-12">
+                        <label for="descricao" class="form-label fw-semibold">
+                            Descrição
+                        </label>
+
+                        <textarea class="form-control"
+                                  id="descricao"
+                                  th:field="*{descricao}"
+                                  rows="3"
+                                  maxlength="1000"
+                                  placeholder="Descreva as características do produto..."></textarea>
+                    </div>
+
+                    <!-- PREÇO -->
+                    <div class="col-md-4">
+                        <label for="preco" class="form-label fw-semibold">
+                            Preço (R$) *
+                        </label>
+
+                        <input type="number"
+                               class="form-control"
+                               id="preco"
+                               th:field="*{preco}"
+                               min="0.01"
+                               step="0.01"
+                               placeholder="0,00"
+                               required>
+                    </div>
+
+                    <!-- ESTOQUE -->
+                    <div class="col-md-4">
+                        <label for="quantidadeEstoque" class="form-label fw-semibold">
+                            Quantidade em estoque *
+                        </label>
+
+                        <input type="number"
+                               class="form-control"
+                               id="quantidadeEstoque"
+                               th:field="*{quantidadeEstoque}"
+                               min="0"
+                               step="1"
+                               placeholder="Ex.: 50"
+                               required>
+                    </div>
+
+                    <!-- IMAGEM -->
+                    <!-- UPLOAD DA IMAGEM -->
+                    <div class="col-md-4">
+                        <label for="arquivoImagem" class="form-label fw-semibold">
+                            Imagem do produto
+                        </label>
+
+                        <input type="file"
+                               class="form-control"
+                               id="arquivoImagem"
+                               name="arquivoImagem"
+                               accept="image/png, image/jpeg, image/webp">
+
+                        <small class="text-muted">
+                            Formatos permitidos: JPG, PNG e WEBP. Máximo de 10 MB.
+                        </small>
+                    </div>
+
+                </div>
+
+                <hr class="my-4">
+
+                <!-- BOTÕES -->
+                <div class="d-flex justify-content-end gap-2 flex-wrap">
+
+                    <a th:href="@{/produtos}"
+                       class="btn btn-outline-secondary">
+                        Cancelar
+                    </a>
+
+                    <button type="submit" class="btn btn-primary">
+                        Cadastrar produto
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <p class="text-muted small mt-3">
+        * Campos obrigatórios.
+    </p>
+
+</main>
+
+<!-- FOOTER -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

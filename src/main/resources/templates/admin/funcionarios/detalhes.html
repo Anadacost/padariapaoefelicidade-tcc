@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Detalhes do Funcionário | Pão e Felicidade</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<main class="container py-4">
+
+    <h1 class="h3 mb-4">Detalhes do Funcionário</h1>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h4 class="mb-4" th:text="${funcionario.nome}"></h4>
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <strong>CPF:</strong>
+                    <p th:text="${funcionario.cpf}"></p>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Telefone:</strong>
+                    <p th:text="${funcionario.telefone}"></p>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Cargo:</strong>
+                    <p th:text="${funcionario.cargo}"></p>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Data de admissão:</strong>
+                    <p th:text="${#temporals.format(funcionario.dataAdmissao, 'dd/MM/yyyy')}"></p>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>E-mail:</strong>
+                    <p th:text="${funcionario.usuario.email}"></p>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Status:</strong>
+
+                    <p>
+                        <span th:if="${funcionario.ativo}" class="badge bg-success">
+                            Ativo
+                        </span>
+
+                        <span th:unless="${funcionario.ativo}" class="badge bg-danger">
+                            Inativo
+                        </span>
+                    </p>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <a th:href="@{/admin/funcionarios}"
+               class="btn btn-secondary">
+                Voltar
+            </a>
+
+            <a th:href="@{/admin/funcionarios/editar/{id}(id=${funcionario.id})}"
+               class="btn btn-warning">
+                Editar funcionário
+            </a>
+
+        </div>
+    </div>
+
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

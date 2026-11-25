@@ -21,17 +21,46 @@
      ========================================================= -->
 <main class="container py-4">
 
-    <!-- Título da página -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <h1 class="h3">DASHBOARD</h1>
-            <p class="text-muted">
-                Descrição curta da funcionalidade.
-            </p>
+    <!-- GERENCIAMENTO -->
+    <div class="row g-3">
+
+        <!-- GERENCIAMENTO DE FUNCIONÁRIOS -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Funcionários</h5>
+
+                    <p class="card-text text-muted">
+                        Cadastre, consulte e gerencie os funcionários da padaria.
+                    </p>
+
+                    <a th:href="@{/admin/funcionarios}"
+                       class="btn btn-primary">
+                        Gerenciar funcionários
+                    </a>
+                </div>
+            </div>
         </div>
+
+        <!-- GERENCIAMENTO DE PRODUTOS -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Produtos</h5>
+
+                    <p class="card-text text-muted">
+                        Cadastre, consulte, edite e gerencie os produtos da loja.
+                    </p>
+
+                    <a th:href="@{/produtos}"
+                       class="btn btn-primary">
+                        Gerenciar produtos
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-
 </main>
 <!-- FOOTER -->
 <div th:replace="~{fragments/footer :: footer}"></div>

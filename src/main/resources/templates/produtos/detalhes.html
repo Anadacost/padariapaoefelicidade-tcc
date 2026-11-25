@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Detalhes do produto">
+    <title>Detalhes do Produto | Pão e Felicidade</title>
+
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+
+<!-- MENU -->
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<main class="container py-4">
+
+    <!-- CABEÇALHO -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Detalhes do Produto</h2>
+            <p class="text-muted mb-0">
+                Consulte todas as informações do produto cadastrado.
+            </p>
+        </div>
+
+        <a th:href="@{/produtos}" class="btn btn-outline-secondary">
+            Voltar para produtos
+        </a>
+    </div>
+
+    <!-- CARD DE DETALHES -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            <div class="row g-4">
+
+                <!-- IMAGEM -->
+                <div class="col-md-4">
+                    <div class="bg-light rounded p-3 text-center">
+                        <img th:if="${produto.imagem != null and !produto.imagem.isEmpty()}"
+                             th:src="@{${produto.imagem}}"
+                             alt="Imagem do produto"
+                             class="img-fluid rounded"
+                             style="max-height: 280px; object-fit: contain;">
+
+                        <div th:if="${produto.imagem == null or produto.imagem.isEmpty()}"
+                             class="text-muted py-5">
+                            <p class="mb-0">Imagem não cadastrada</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INFORMAÇÕES -->
+                <div class="col-md-8">
+
+                    <h3 class="fw-bold mb-3" th:text="${produto.nome}">
+                        Nome do produto
+                    </h3>
+
+                    <p class="text-muted">
+                        <strong>Descrição:</strong>
+                        <span th:text="${produto.descricao != null and !produto.descricao.isEmpty()
+                                ? produto.descricao : 'Nenhuma descrição informada.'}">
+                            </span>
+                    </p>
+
+                    <hr>
+
+                    <div class="row g-3">
+
+                        <div class="col-sm-6">
+                            <small class="text-muted">Categoria</small>
+                            <p class="fw-semibold mb-0"
+                               th:text="${produto.categoria}"></p>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <small class="text-muted">Preço</small>
+                            <p class="fw-semibold text-success mb-0"
+                               th:text="${#numbers.formatCurrency(produto.preco)}"></p>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <small class="text-muted">Quantidade em estoque</small>
+                            <p class="fw-semibold mb-0"
+                               th:text="${produto.quantidadeEstoque}"></p>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <small class="text-muted">Situação</small>
+                            <p class="mb-0">
+                                    <span th:if="${produto.ativo}"
+                                          class="badge bg-success">
+                                        Ativo
+                                    </span>
+
+                                <span th:unless="${produto.ativo}"
+                                      class="badge bg-danger">
+                                        Inativo
+                                    </span>
+                            </p>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <small class="text-muted">Data de cadastro</small>
+                            <p class="fw-semibold mb-0"
+                               th:text="${produto.dataCadastro != null
+                                       ? #temporals.format(produto.dataCadastro, 'dd/MM/yyyy HH:mm')
+                                       : 'Não informada'}"></p>
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <!-- AÇÕES -->
+                    <div class="d-flex flex-wrap gap-2">
+
+                        <a th:href="@{/produtos/editar/{id}(id=${produto.id})}"
+                           class="btn btn-primary">
+                            Editar produto
+                        </a>
+
+                        <a th:href="@{/produtos}"
+                           class="btn btn-outline-secondary">
+                            Voltar à listagem
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+<!-- FOOTER -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

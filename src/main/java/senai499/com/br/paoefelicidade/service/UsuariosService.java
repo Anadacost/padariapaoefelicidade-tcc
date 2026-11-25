@@ -1,8 +1,8 @@
+
 package senai499.com.br.paoefelicidade.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import senai499.com.br.paoefelicidade.dto.AlterarSenhaForm;
@@ -28,6 +28,26 @@ public class UsuariosService {
     // ==========================================
 
     public UsuariosModel cadastrar(UsuariosModel usuario) {
+
+        if (usuario.getEmail() == null || usuario.getEmail().isBlank()) {
+            throw new IllegalArgumentException("Informe o e-mail.");
+        }
+
+        if (usuario.getSenha() == null || usuario.getSenha().length() < 8) {
+            throw new IllegalArgumentException(
+                    "A senha deve ter pelo menos 8 caracteres."
+            );
+        }
+
+        if (usuariosRepository.existsByEmailIgnoreCase(
+                usuario.getEmail().trim())) {
+
+            throw new IllegalArgumentException(
+                    "Este e-mail já está cadastrado."
+            );
+        }
+
+        usuario.setEmail(usuario.getEmail().trim());
 
         usuario.setSenha(
                 passwordEncoder.encode(usuario.getSenha())

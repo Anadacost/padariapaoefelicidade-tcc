@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Painel do Funcionário | Pão e Felicidade</title>
+
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<main class="container py-4">
+
+    <div class="mb-4">
+        <h2 class="fw-bold">Painel do Funcionário</h2>
+        <p class="text-muted">
+            Bem-vindo à sua área de controle do Pão e Felicidade!
+        </p>
+    </div>
+
+    <!-- RESUMO -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Pedidos recentes</h5>
+                    <h2 class="fw-bold">—</h2>
+                    <p class="text-muted mb-0">
+                        Acompanhe os pedidos recebidos.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Atendimentos</h5>
+                    <h2 class="fw-bold">—</h2>
+                    <p class="text-muted mb-0">
+                        Consulte os atendimentos dos clientes.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Produtos</h5>
+                    <h2 class="fw-bold">—</h2>
+                    <p class="text-muted mb-0">
+                        Acesse o gerenciamento de produtos.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PEDIDOS -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+
+            <h4 class="fw-bold mb-3">Pedidos recentes</h4>
+
+            <div class="text-center py-4">
+                <p class="text-muted mb-0">
+                    Nenhum pedido disponível no momento.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ACESSOS -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <h4 class="fw-bold mb-3">Minha área</h4>
+
+            <p class="text-muted">
+                Aqui você poderá gerenciar suas atividades e seus dados.
+            </p>
+
+            <div class="d-flex flex-wrap gap-2">
+
+                <a th:href="@{/funcionario/perfil}"
+                   class="btn btn-outline-primary">
+                    Meu perfil
+                </a>
+
+                <a th:href="@{/funcionario/senha}"
+                   class="btn btn-outline-secondary">
+                    Alterar senha
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+</main>
+<div class="col-md-4">
+    <div class="card shadow-sm border-0 h-100">
+        <div class="card-body d-flex flex-column">
+
+            <h5 class="card-title fw-bold">
+                Gerenciar produtos
+            </h5>
+
+            <h2 class="fw-bold">
+                <i class="bi bi-box-seam"></i>
+            </h2>
+
+            <p class="text-muted">
+                Cadastre, consulte, edite e gerencie os produtos da padaria.
+            </p>
+
+            <div class="mt-auto d-flex flex-wrap gap-2">
+
+                <a th:href="@{/produtos}"
+                   class="btn btn-primary">
+                    Acessar produtos
+                </a>
+
+                <a th:href="@{/produtos/cadastro}"
+                   class="btn btn-outline-primary">
+                    Cadastrar produto
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>
