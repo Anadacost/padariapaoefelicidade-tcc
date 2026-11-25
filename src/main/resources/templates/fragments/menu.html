@@ -1,0 +1,165 @@
+
+<nav th:fragment="menu"
+     xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+     class="navbar navbar-expand-lg navbar-dark menu-padrao">
+
+    <div class="container">
+
+        <!-- LOGOTIPO -->
+        <a class="navbar-brand logo-padrao" th:href="@{/}">
+            🥖 Pão e Felicidade
+            <small>Feito com amor e carinho</small>
+        </a>
+
+        <!-- BOTÃO MOBILE -->
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#menuPrincipal"
+                aria-controls="menuPrincipal"
+                aria-expanded="false"
+                aria-label="Abrir menu">
+
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+
+            <!-- LINKS PÚBLICOS -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">
+                        Início
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#sobre">
+                        Sobre nós
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#produtos">
+                        Produtos
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#servicos">
+                        Serviços
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/#contato">
+                        Contato
+                    </a>
+                </li>
+
+                <!-- ADMINISTRADOR -->
+                <li class="nav-item"
+                    sec:authorize="hasRole('ADMIN')">
+
+                    <a class="nav-link" th:href="@{/dashboard}">
+                        Administração
+                    </a>
+                </li>
+
+                <!-- FUNCIONÁRIO -->
+                <li class="nav-item"
+                    sec:authorize="hasRole('FUNCIONARIO')">
+
+                    <a class="nav-link" th:href="@{/funcionario}">
+                        Área do funcionário
+                    </a>
+                </li>
+
+            </ul>
+
+            <!-- NÃO AUTENTICADO -->
+            <div sec:authorize="!isAuthenticated()">
+
+                <a class="btn btn-login-menu"
+                   th:href="@{/login}">
+                    Minha conta
+                </a>
+
+            </div>
+
+            <!-- AUTENTICADO -->
+            <div sec:authorize="isAuthenticated()"
+                 class="dropdown">
+
+                <button class="btn btn-login-menu dropdown-toggle"
+                        type="button"
+                        id="menuUsuario"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+
+                    Olá,
+                    <span th:text="${session.nomeUsuario}">
+                        Usuário
+                    </span>
+
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end"
+                    aria-labelledby="menuUsuario">
+
+                    <!-- CLIENTE -->
+                    <li sec:authorize="hasRole('CLIENTE')">
+                        <a class="dropdown-item"
+                           th:href="@{/cliente/painel}">
+                            Meu painel
+                        </a>
+                    </li>
+
+                    <li sec:authorize="hasRole('CLIENTE')">
+                        <a class="dropdown-item"
+                           th:href="@{/cliente/pedidos}">
+                            Meus pedidos
+                        </a>
+                    </li>
+
+                    <!-- ADMIN -->
+                    <li sec:authorize="hasRole('ADMIN')">
+                        <a class="dropdown-item"
+                           th:href="@{/dashboard}">
+                            Administração
+                        </a>
+                    </li>
+
+                    <!-- FUNCIONÁRIO -->
+                    <li sec:authorize="hasRole('FUNCIONARIO')">
+                        <a class="dropdown-item"
+                           th:href="@{/funcionario}">
+                            Painel do funcionário
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <!-- SAIR -->
+                    <li>
+                        <form th:action="@{/logout}" method="post">
+
+                            <button type="submit"
+                                    class="dropdown-item text-danger">
+                                Sair do sistema
+                            </button>
+
+                        </form>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+</nav>

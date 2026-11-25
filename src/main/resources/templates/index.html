@@ -1,0 +1,441 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Pão e Felicidade: pães, bolos, doces e salgados preparados com carinho.">
+
+    <title>Início | Pão e Felicidade</title>
+
+    <!-- Bootstrap local -->
+    <link rel="stylesheet"
+          th:href="@{/css/bootstrap/bootstrap.min.css}">
+
+    <!-- CSS geral -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- CSS da página inicial -->
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+
+<body>
+
+<!-- MENU -->
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+
+<!-- CAROUSEL -->
+<section class="carousel-section">
+
+    <div id="carouselPadaria"
+         class="carousel slide"
+         data-bs-ride="carousel">
+
+        <div class="carousel-indicators">
+
+            <button type="button"
+                    data-bs-target="#carouselPadaria"
+                    data-bs-slide-to="0"
+                    class="active"
+                    aria-current="true"
+                    aria-label="Slide 1">
+            </button>
+
+            <button type="button"
+                    data-bs-target="#carouselPadaria"
+                    data-bs-slide-to="1"
+                    aria-label="Slide 2">
+            </button>
+
+            <button type="button"
+                    data-bs-target="#carouselPadaria"
+                    data-bs-slide-to="2"
+                    aria-label="Slide 3">
+            </button>
+
+        </div>
+
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+
+                <img src="/img/banner1.jpg"
+                     class="d-block w-100"
+                     alt="Pães fresquinhos">
+
+                <div class="carousel-caption">
+                    <h2>O sabor que acolhe</h2>
+
+                    <p>
+                        Produtos fresquinhos preparados com carinho
+                        para fazer parte do seu dia.
+                    </p>
+
+                    <a href="#produtos" class="btn-principal">
+                        Conheça nossos produtos
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="carousel-item">
+
+                <img src="/img/banner2.jpg"
+                     class="d-block w-100"
+                     alt="Bolos e doces">
+
+                <div class="carousel-caption">
+                    <h2>Momentos mais doces</h2>
+
+                    <p>
+                        Bolos e delícias especiais para compartilhar
+                        com quem você ama.
+                    </p>
+
+                    <a href="#produtos" class="btn-principal">
+                        Ver produtos
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="carousel-item">
+
+                <img src="/img/banner3.jpg"
+                     class="d-block w-100"
+                     alt="Café da padaria">
+
+                <div class="carousel-caption">
+                    <h2>Seu momento especial</h2>
+
+                    <p>
+                        Um bom café e aquele sabor que lembra casa.
+                    </p>
+
+                    <a href="#sobre" class="btn-principal">
+                        Nossa história
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <button class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselPadaria"
+                data-bs-slide="prev">
+
+            <span class="carousel-control-prev-icon"
+                  aria-hidden="true"></span>
+
+            <span class="visually-hidden">Anterior</span>
+
+        </button>
+
+        <button class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselPadaria"
+                data-bs-slide="next">
+
+            <span class="carousel-control-next-icon"
+                  aria-hidden="true"></span>
+
+            <span class="visually-hidden">Próximo</span>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- SOBRE -->
+<section id="sobre" class="sobre-section">
+
+    <div class="container">
+
+        <div class="sobre-content">
+
+            <div class="sobre-image">
+                <img src="/img/sobre.jpg"
+                     alt="Ambiente da padaria Pão e Felicidade">
+            </div>
+
+            <div class="sobre-text">
+
+                <span class="section-label">Nossa história</span>
+
+                <h2>Mais que uma padaria, um lugar especial</h2>
+
+                <p>
+                    O Pão e Felicidade nasceu com o propósito de levar
+                    sabor, carinho e qualidade para a mesa de cada cliente.
+                </p>
+
+                <p>
+                    Acreditamos que os melhores momentos são aqueles
+                    compartilhados com pessoas especiais, acompanhados
+                    de um pão quentinho, um café ou uma deliciosa sobremesa.
+                </p>
+
+                <p>
+                    Cada produto é preparado pensando em proporcionar
+                    uma experiência especial, com dedicação e carinho.
+                </p>
+
+                <a href="#contato" class="btn-secundario">
+                    Entre em contato
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PRODUTOS -->
+<section id="produtos" class="produtos-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-label">Nossas delícias</span>
+
+            <h2>Conheça nossos produtos</h2>
+
+            <p>
+                Sabores preparados com carinho para todos os momentos.
+            </p>
+
+        </div>
+
+        <div class="produtos-grid">
+
+            <article class="produto-card">
+
+                <img src="/img/paes.jpg" alt="Pães">
+
+                <div class="produto-info">
+                    <h3>Pães</h3>
+
+                    <p>
+                        Pães fresquinhos e saborosos para começar
+                        bem o seu dia.
+                    </p>
+                </div>
+
+            </article>
+
+            <article class="produto-card">
+
+                <img src="/img/bolos.jpg" alt="Bolos e doces">
+
+                <div class="produto-info">
+                    <h3>Bolos e doces</h3>
+
+                    <p>
+                        Delícias especiais para acompanhar
+                        seus melhores momentos.
+                    </p>
+                </div>
+
+            </article>
+
+            <article class="produto-card">
+
+                <img src="/img/salgados.jpg" alt="Salgados">
+
+                <div class="produto-info">
+                    <h3>Salgados</h3>
+
+                    <p>
+                        Opções deliciosas para o café da manhã,
+                        lanche ou qualquer hora do dia.
+                    </p>
+                </div>
+
+            </article>
+
+        </div>
+
+        <div class="section-action">
+
+            <a th:href="@{/login}" class="btn-principal">
+                Faça seu pedido
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SERVIÇOS -->
+<section id="servicos" class="servicos-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-label">Como podemos ajudar?</span>
+
+            <h2>Nossos serviços</h2>
+
+            <p>
+                Mais praticidade e sabor para o seu dia.
+            </p>
+
+        </div>
+
+        <div class="servicos-grid">
+
+            <article class="servico-card">
+
+                <div class="servico-icon">🎂</div>
+
+                <h3>Encomendas</h3>
+
+                <p>
+                    Faça encomendas de bolos e outros produtos
+                    para suas comemorações.
+                </p>
+
+            </article>
+
+            <article class="servico-card">
+
+                <div class="servico-icon">🛍️</div>
+
+                <h3>Retirada</h3>
+
+                <p>
+                    Faça seu pedido e retire seus produtos
+                    diretamente na padaria.
+                </p>
+
+            </article>
+
+            <article class="servico-card">
+
+                <div class="servico-icon">🚚</div>
+
+                <h3>Entrega</h3>
+
+                <p>
+                    Consulte a disponibilidade de entrega
+                    para sua região.
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONTATO E MAPA -->
+<section id="contato" class="contato-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-label">Venha nos visitar</span>
+
+            <h2>Localização e contato</h2>
+
+            <p>
+                Será um prazer receber você!
+            </p>
+
+        </div>
+
+        <div class="contato-content">
+
+            <div class="contato-info">
+
+                <div class="contato-item">
+
+                    <span class="contato-icon">📍</span>
+
+                    <div>
+                        <h3>Nosso endereço</h3>
+                        <p>Insira aqui o endereço da padaria.</p>
+                    </div>
+
+                </div>
+
+                <div class="contato-item">
+
+                    <span class="contato-icon">📞</span>
+
+                    <div>
+                        <h3>Telefone</h3>
+                        <p>(15) 00000-0000</p>
+                    </div>
+
+                </div>
+
+                <div class="contato-item">
+
+                    <span class="contato-icon">✉️</span>
+
+                    <div>
+                        <h3>E-mail</h3>
+                        <p>contato@paoefelicidade.com.br</p>
+                    </div>
+
+                </div>
+
+                <div class="contato-item">
+
+                    <span class="contato-icon">🕒</span>
+
+                    <div>
+                        <h3>Horário de atendimento</h3>
+                        <p>Consulte nossos horários de funcionamento.</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="mapa-container">
+
+                <iframe
+                        src="https://www.google.com/maps?q=P%C3%A3o%20e%20Felicidade&output=embed"
+                        loading="lazy"
+                        allowfullscreen
+                        title="Localização da padaria">
+                </iframe>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
+<!-- BOOTSTRAP JS -->
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>
