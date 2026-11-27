@@ -10,9 +10,9 @@
 
     <title>Tela de Login</title>
 
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
     <link rel="stylesheet"
           th:href="@{/css/bootstrap/bootstrap.min.css}">
-
     <link rel="stylesheet"
           th:href="@{/css/style.css}">
 </head>
@@ -20,6 +20,7 @@
 <body class="bg-light">
 
 <!-- MENU -->
+<div th:replace="~{fragments/menu :: menu}"></div>
 
 <main class="container py-5">
 
@@ -41,18 +42,28 @@
                         Usuário ou senha inválidos.
                     </div>
 
+                    <!-- CONTA INATIVA -->
+                    <div th:if="${param.inativo}"
+                         class="alert alert-warning">
+                        Sua conta está desativada.
+                    </div>
+
                     <!-- LOGOUT -->
                     <div th:if="${param.sair}"
                          class="alert alert-success">
                         Você saiu do sistema.
                     </div>
+
                     <!-- CADASTRO REALIZADO -->
+                    <div th:if="${sucesso}"
+                         class="alert alert-success"
+                         th:text="${sucesso}">
+                    </div>
+
                     <div th:if="${param.cadastro}"
                          class="alert alert-success">
-
                         Cadastro realizado com sucesso!
                         Entre com seu e-mail e senha.
-
                     </div>
 
                     <!-- FORMULÁRIO -->
@@ -82,13 +93,29 @@
                                    required>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100">
+                        <button type="submit"
+                                class="btn btn-primary w-100">
                             Entrar
                         </button>
+
                     </form>
-                    <div th:if="${param.inativo}" class="alert alert-warning">
-                        Sua conta está desativada.
+
+                    <hr>
+
+                    <!-- AUTOCADASTRO -->
+                    <div class="text-center">
+
+                        <p class="mb-2">
+                            Não tem cadastro?
+                        </p>
+
+                        <a th:href="@{/cliente/cadastro}"
+                           class="btn btn-outline-primary w-100">
+                            Cadastre-se
+                        </a>
+
                     </div>
+
                 </div>
             </div>
 

@@ -130,6 +130,14 @@ public class SecurityConfig {
                                 "/perfil",
                                 "/perfil/**"
                         ).authenticated()
+                        // ==========================================
+                        // GERENCIAMENTO DE CLIENTES
+                        // ADMINISTRADOR E FUNCIONÁRIO
+                        // ==========================================
+                        .requestMatchers(
+                           "/admin/clientes",
+                                    "/admin/clientes/**"
+                        ).hasAnyRole("ADMIN", "FUNCIONARIO")
 
                         // ==========================================
                         // DEMAIS ROTAS

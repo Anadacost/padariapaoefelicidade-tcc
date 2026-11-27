@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Cadastro de Cliente | Pão & Felicidade</title>
+
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+    <link rel="stylesheet"
+          th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+
+<!-- MENU -->
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<main class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-12 col-md-8 col-lg-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h1 class="h4 text-center mb-2">
+                        Criar minha conta
+                    </h1>
+
+                    <p class="text-center text-muted mb-4">
+                        Preencha seus dados para se cadastrar.
+                    </p>
+
+                    <!-- ERRO -->
+                    <div th:if="${erro}"
+                         class="alert alert-danger"
+                         th:text="${erro}">
+                    </div>
+
+                    <!-- FORMULÁRIO -->
+                    <form th:action="@{/cliente/cadastro}"
+                          th:object="${cliente}"
+                          method="post">
+
+                        <!-- NOME -->
+                        <div class="mb-3">
+
+                            <label for="nome" class="form-label">
+                                Nome completo
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="nome"
+                                   th:field="*{nome}"
+                                   placeholder="Digite seu nome completo"
+                                   required>
+
+                        </div>
+
+                        <!-- CPF -->
+                        <div class="mb-3">
+
+                            <label for="cpf" class="form-label">
+                                CPF
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="cpf"
+                                   th:field="*{cpf}"
+                                   placeholder="Digite seu CPF"
+                                   maxlength="14"
+                                   required>
+
+                        </div>
+
+                        <!-- TELEFONE -->
+                        <div class="mb-3">
+
+                            <label for="telefone" class="form-label">
+                                Telefone
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="telefone"
+                                   th:field="*{telefone}"
+                                   placeholder="Digite seu telefone">
+
+                        </div>
+
+                        <!-- EMAIL -->
+                        <div class="mb-3">
+
+                            <label for="email" class="form-label">
+                                E-mail
+                            </label>
+
+                            <input type="email"
+                                   class="form-control"
+                                   id="email"
+                                   th:field="*{email}"
+                                   placeholder="Digite seu e-mail"
+                                   required>
+
+                        </div>
+
+                        <!-- SENHA -->
+                        <div class="mb-3">
+
+                            <label for="senha" class="form-label">
+                                Senha
+                            </label>
+
+                            <input type="password"
+                                   class="form-control"
+                                   id="senha"
+                                   th:field="*{senha}"
+                                   placeholder="Crie uma senha"
+                                   minlength="8"
+                                   required>
+
+                            <div class="form-text">
+                                A senha deve possuir pelo menos 8 caracteres.
+                            </div>
+
+                        </div>
+
+                        <!-- CONFIRMAR SENHA -->
+                        <div class="mb-3">
+
+                            <label for="confirmarSenha"
+                                   class="form-label">
+                                Confirmar senha
+                            </label>
+
+                            <input type="password"
+                                   class="form-control"
+                                   id="confirmarSenha"
+                                   th:field="*{confirmarSenha}"
+                                   placeholder="Digite sua senha novamente"
+                                   required>
+
+                        </div>
+
+                        <!-- BOTÕES -->
+                        <div class="d-grid gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                Criar minha conta
+                            </button>
+
+                            <a th:href="@{/login}"
+                               class="btn btn-outline-secondary">
+                                Já tenho cadastro
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<!-- FOOTER -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

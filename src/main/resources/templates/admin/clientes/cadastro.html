@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Cadastrar Cliente | Pão & Felicidade</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<main class="container py-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-12 col-lg-8">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h2 class="mb-2">Cadastrar Cliente</h2>
+
+                    <p class="text-muted">
+                        Preencha os dados para cadastrar um novo cliente.
+                    </p>
+
+                    <!-- ERRO -->
+                    <div th:if="${erro}"
+                         class="alert alert-danger"
+                         th:text="${erro}">
+                    </div>
+
+                    <form th:action="@{/admin/clientes/salvar}"
+                          th:object="${cliente}"
+                          method="post">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Nome completo
+                            </label>
+
+                            <input type="text"
+                                   th:field="*{nome}"
+                                   class="form-control"
+                                   placeholder="Digite o nome completo"
+                                   required>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    CPF
+                                </label>
+
+                                <input type="text"
+                                       th:field="*{cpf}"
+                                       class="form-control"
+                                       placeholder="Digite o CPF"
+                                       maxlength="14"
+                                       required>
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Telefone
+                                </label>
+
+                                <input type="tel"
+                                       th:field="*{telefone}"
+                                       class="form-control"
+                                       placeholder="Digite o telefone"
+                                       required>
+
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                E-mail
+                            </label>
+
+                            <input type="email"
+                                   th:field="*{email}"
+                                   class="form-control"
+                                   placeholder="Digite o e-mail"
+                                   required>
+
+                        </div>
+
+                        <div class="alert alert-info">
+
+                            <strong>Senha inicial do cliente:</strong>
+                            123456789
+
+                            <p class="mb-0 mt-1">
+                                A senha será criptografada e o cliente
+                                poderá alterá-la posteriormente.
+                            </p>
+
+                        </div>
+
+                        <div class="d-flex gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                Cadastrar cliente
+                            </button>
+
+                            <a th:href="@{/admin/clientes}"
+                               class="btn btn-outline-secondary">
+                                Cancelar
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

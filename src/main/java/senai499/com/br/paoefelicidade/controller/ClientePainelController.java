@@ -1,0 +1,15 @@
+
+package senai499.com.br.paoefelicidade.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class ClientePainelController {
+
+    @GetMapping("/cliente/painel")
+    public String painel() {
+
+        return "cliente/index";
+    }
+}
