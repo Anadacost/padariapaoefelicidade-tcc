@@ -56,7 +56,16 @@ public class SecurityConfig {
                         ).permitAll()
 
                         // ==========================================
-                        // CATÁLOGO E SERVIÇOS PÚBLICOS
+                        // CARDÁPIO PÚBLICO
+                        // ==========================================
+
+                        .requestMatchers(
+                                "/cardapio",
+                                "/cardapio/**"
+                        ).permitAll()
+
+                        // ==========================================
+                        // OUTRAS PÁGINAS PÚBLICAS
                         // ==========================================
 
                         .requestMatchers(
@@ -80,7 +89,7 @@ public class SecurityConfig {
                         ).hasRole("ADMIN")
 
                         // ==========================================
-                        // PRODUTOS
+                        // GERENCIAMENTO DE PRODUTOS
                         // ADMINISTRADOR E FUNCIONÁRIO
                         // ==========================================
 
@@ -130,13 +139,15 @@ public class SecurityConfig {
                                 "/perfil",
                                 "/perfil/**"
                         ).authenticated()
+
                         // ==========================================
                         // GERENCIAMENTO DE CLIENTES
                         // ADMINISTRADOR E FUNCIONÁRIO
                         // ==========================================
+
                         .requestMatchers(
-                           "/admin/clientes",
-                                    "/admin/clientes/**"
+                                "/admin/clientes",
+                                "/admin/clientes/**"
                         ).hasAnyRole("ADMIN", "FUNCIONARIO")
 
                         // ==========================================
@@ -151,19 +162,12 @@ public class SecurityConfig {
                 // ==========================================
 
                 .formLogin(form -> form
-
                         .loginPage("/login")
-
                         .loginProcessingUrl("/login")
-
                         .usernameParameter("email")
-
                         .passwordParameter("senha")
-
                         .failureUrl("/login?erro")
-
                         .successHandler(loginSuccessHandler)
-
                         .permitAll()
                 )
 
@@ -172,15 +176,10 @@ public class SecurityConfig {
                 // ==========================================
 
                 .logout(logout -> logout
-
                         .logoutUrl("/logout")
-
                         .logoutSuccessUrl("/login?sair")
-
                         .invalidateHttpSession(true)
-
                         .deleteCookies("JSESSIONID")
-
                         .permitAll()
                 )
 
@@ -189,7 +188,6 @@ public class SecurityConfig {
                 // ==========================================
 
                 .exceptionHandling(exception -> exception
-
                         .accessDeniedPage("/acesso-negado")
                 );
 

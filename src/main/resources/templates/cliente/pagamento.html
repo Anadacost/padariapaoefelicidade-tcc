@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Pagamento | Pão & Felicidade</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/bootstrap/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<main class="container py-5">
+
+    <h1 class="fw-bold mb-2">Forma de pagamento</h1>
+
+    <p class="text-muted mb-4">
+        Escolha como deseja pagar seu pedido.
+    </p>
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <h4 class="fw-bold mb-4">
+                        Selecione uma opção
+                    </h4>
+
+                    <form th:action="@{/cliente/checkout/pagar}"
+                          method="post">
+
+                        <div class="form-check border rounded p-3 mb-3">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="formaPagamento"
+                                   id="pix"
+                                   value="PIX"
+                                   required>
+
+                            <label class="form-check-label fw-bold"
+                                   for="pix">
+                                Pix
+                            </label>
+                            <p class="text-muted mb-0">
+                                Pagamento via Pix.
+                            </p>
+                        </div>
+
+                        <div class="form-check border rounded p-3 mb-3">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="formaPagamento"
+                                   id="dinheiro"
+                                   value="DINHEIRO">
+
+                            <label class="form-check-label fw-bold"
+                                   for="dinheiro">
+                                Dinheiro
+                            </label>
+                            <p class="text-muted mb-0">
+                                Pagamento na retirada ou entrega.
+                            </p>
+                        </div>
+
+                        <div class="form-check border rounded p-3 mb-3">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="formaPagamento"
+                                   id="credito"
+                                   value="CARTAO_CREDITO">
+
+                            <label class="form-check-label fw-bold"
+                                   for="credito">
+                                Cartão de crédito
+                            </label>
+                            <p class="text-muted mb-0">
+                                Pagamento presencial.
+                            </p>
+                        </div>
+
+                        <div class="form-check border rounded p-3 mb-4">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="formaPagamento"
+                                   id="debito"
+                                   value="CARTAO_DEBITO">
+
+                            <label class="form-check-label fw-bold"
+                                   for="debito">
+                                Cartão de débito
+                            </label>
+                            <p class="text-muted mb-0">
+                                Pagamento presencial.
+                            </p>
+                        </div>
+
+                        <button type="submit"
+                                class="btn btn-success w-100">
+                            Confirmar pagamento
+                        </button>
+
+                        <a th:href="@{/cliente/checkout}"
+                           class="btn btn-outline-secondary w-100 mt-2">
+                            Voltar
+                        </a>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

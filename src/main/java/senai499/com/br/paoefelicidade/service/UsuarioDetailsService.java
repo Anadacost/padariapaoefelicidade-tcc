@@ -37,6 +37,13 @@ public class UsuarioDetailsService implements UserDetailsService {
             );
         }
 
+        System.out.println("========== LOGIN ==========");
+        System.out.println("EMAIL: " + usuario.getEmail());
+        System.out.println("PERFIL: " + usuario.getPerfil());
+        System.out.println("ATIVO: " + usuario.isAtivo());
+        System.out.println("AUTORIDADE: ROLE_" + usuario.getPerfil().name());
+        System.out.println("===========================");
+
         return User.builder()
                 .username(usuario.getEmail())
                 .password(usuario.getSenha())

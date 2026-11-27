@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Pedido confirmado | Pão & Felicidade</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/bootstrap/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<main class="container py-5">
+
+    <div class="card shadow-sm text-center mx-auto"
+         style="max-width: 600px;">
+
+        <div class="card-body py-5">
+
+            <h1 class="text-success fw-bold mb-3">
+                Pedido confirmado!
+            </h1>
+
+            <p class="lead">
+                Sua compra foi registrada com sucesso.
+            </p>
+
+            <p class="text-muted">
+                Obrigado por escolher a Pão & Felicidade!
+            </p>
+
+            <p th:if="${pedidoId != null}">
+                Número do pedido:
+                <strong th:text="${pedidoId}"></strong>
+            </p>
+
+            <a th:href="@{/cardapio}"
+               class="btn btn-primary mt-3">
+                Voltar ao cardápio
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

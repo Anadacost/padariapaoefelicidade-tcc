@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Finalizar compra | Pão & Felicidade</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/bootstrap/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<main class="container py-5">
+
+    <div class="mb-4">
+        <h1 class="fw-bold">Finalizar compra</h1>
+
+        <p class="text-muted">
+            Confira seu pedido e escolha como deseja receber.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- RESUMO DOS PRODUTOS -->
+        <div class="col-lg-7">
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <h4 class="fw-bold mb-4">
+                        Resumo do pedido
+                    </h4>
+
+                    <!-- Cada produto do carrinho -->
+                    <div th:each="item : ${carrinho.itens}"
+                         class="d-flex justify-content-between align-items-center border-bottom py-3">
+
+                        <div>
+                            <h6 class="fw-bold mb-1"
+                                th:text="${item.produto.nome}">
+                            </h6>
+
+                            <small class="text-muted">
+                                Quantidade:
+                                <span th:text="${item.quantidade}"></span>
+                            </small>
+
+                            <p class="text-muted mb-0">
+                                Preço unitário:
+                                R$
+                                <span th:text="${#numbers.formatDecimal(item.produto.preco, 1, 'POINT', 2, 'COMMA')}"></span>
+                            </p>
+                        </div>
+
+                        <strong>
+                            R$
+                            <span th:text="${#numbers.formatDecimal(subtotais.get(item.id), 1, 'POINT', 2, 'COMMA')}"></span>
+                        </strong>
+
+                    </div>
+
+                    <!-- Total geral do pedido -->
+                    <div class="d-flex justify-content-between mt-4">
+
+                        <h5 class="fw-bold">Total:</h5>
+
+                        <h5 class="fw-bold text-success">
+                            R$
+                            <span th:text="${#numbers.formatDecimal(total, 1, 'POINT', 2, 'COMMA')}"></span>
+                        </h5>
+
+                    </div>
+
+                    <a th:href="@{/cliente/carrinho}"
+                       class="btn btn-outline-secondary mt-3">
+                        Voltar ao carrinho
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FORMA DE RECEBIMENTO -->
+        <div class="col-lg-5">
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <h4 class="fw-bold mb-4">
+                        Forma de recebimento
+                    </h4>
+
+                    <form th:action="@{/cliente/checkout/confirmar}"
+                          method="post">
+
+                        <div class="mb-3">
+
+                            <label for="tipoRecebimento"
+                                   class="form-label">
+                                Como deseja receber?
+                            </label>
+
+                            <select id="tipoRecebimento"
+                                    name="tipoRecebimento"
+                                    class="form-select"
+                                    required>
+
+                                <option value="">
+                                    Selecione uma opção
+                                </option>
+
+                                <option th:each="tipo : ${tiposRecebimento}"
+                                        th:value="${tipo}"
+                                        th:text="${tipo.name() == 'RETIRADA' ? 'Retirada' : (tipo.name() == 'BALCAO' ? 'Consumo no balcão' : 'Entrega')}">
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="alert alert-info">
+                            Na próxima etapa você poderá escolher a forma de pagamento.
+                        </div>
+
+                        <button type="submit"
+                                class="btn btn-success w-100">
+                            Continuar para pagamento
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

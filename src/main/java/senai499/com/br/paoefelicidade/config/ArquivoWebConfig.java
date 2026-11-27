@@ -1,3 +1,4 @@
+
 package senai499.com.br.paoefelicidade.config;
 
 import java.nio.file.Path;
@@ -17,6 +18,10 @@ public class ArquivoWebConfig implements WebMvcConfigurer {
                 .normalize()
                 .toUri()
                 .toString();
+
+        if (!caminho.endsWith("/")) {
+            caminho += "/";
+        }
 
         registry.addResourceHandler("/uploads/produtos/**")
                 .addResourceLocations(caminho);

@@ -42,8 +42,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/#produtos">
-                        Produtos
+                    <a class="nav-link"  th:href="@{/cardapio}">
+                        Cardápio
                     </a>
                 </li>
 
@@ -68,12 +68,24 @@
                     </a>
                 </li>
 
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link"  th:href="@{/produtos}">
+                        Produtos
+                    </a>
+                </li>
+
                 <!-- FUNCIONÁRIO -->
                 <li class="nav-item"
                     sec:authorize="hasRole('FUNCIONARIO')">
 
                     <a class="nav-link" th:href="@{/funcionario/painel}">
                         Área do funcionário
+                    </a>
+                </li>
+
+                <li class="nav-item" sec:authorize="hasRole('FUNCIONARIO')">
+                    <a class="nav-link"  th:href="@{/produtos}">
+                        Produtos
                     </a>
                 </li>
 
@@ -158,6 +170,14 @@
                         <a class="dropdown-item"
                            th:href="@{/cliente/pedidos}">
                             Meus pedidos
+                        </a>
+
+                    </li>
+                    <li sec:authorize="hasRole('CLIENTE')">
+
+                        <a class="dropdown-item"
+                           th:href="@{/cliente/carrinho}">
+                            Meu carrinho
                         </a>
 
                     </li>

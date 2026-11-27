@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Conheça o cardápio da Pão & Felicidade.">
+
+    <title>Cardápio | Pão & Felicidade</title>
+
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+
+<!-- MENU -->
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<main class="container py-5">
+
+    <!-- CABEÇALHO -->
+    <section class="text-center mb-5">
+
+        <h1 class="fw-bold">Nosso Cardápio</h1>
+
+        <p class="text-muted">
+            Confira nossas delícias preparadas com muito amor e carinho!
+        </p>
+
+    </section>
+
+    <!-- MENSAGENS -->
+    <div th:if="${sucesso}"
+         class="alert alert-success"
+         th:text="${sucesso}">
+    </div>
+
+    <div th:if="${erro}"
+         class="alert alert-danger"
+         th:text="${erro}">
+    </div>
+
+    <!-- LISTAGEM DE PRODUTOS -->
+    <section>
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-4"
+                 th:each="produto : ${produtos}">
+
+                <div class="card h-100 shadow-sm">
+
+                    <!-- FOTO DO PRODUTO -->
+                    <div class="ratio ratio-4x3"
+                         th:if="${produto.imagem != null and !produto.imagem.isEmpty()}">
+
+                        <img th:src="${produto.imagem}"
+                             th:alt="${produto.nome}"
+                             class="w-100 h-100 object-fit-cover">
+                    </div>
+
+                    <!-- SEM FOTO -->
+                    <div th:if="${produto.imagem == null or produto.imagem.isEmpty()}"
+                         class="bg-light text-muted text-center py-5">
+
+                        Imagem não cadastrada
+
+                    </div>
+
+                    <!-- INFORMAÇÕES -->
+                    <div class="card-body d-flex flex-column">
+
+                        <h5 class="card-title fw-bold"
+                            th:text="${produto.nome}">
+                        </h5>
+
+                        <p class="text-muted mb-2"
+                           th:text="${produto.categoria}">
+                        </p>
+
+                        <p class="card-text"
+                           th:text="${produto.descricao}">
+                        </p>
+
+                        <h5 class="text-success fw-bold mt-auto"
+                            th:text="${#numbers.formatCurrency(produto.preco)}">
+                        </h5>
+
+                        <!-- DISPONIBILIDADE -->
+                        <div class="mt-2">
+
+                            <span th:if="${produto.quantidadeEstoque > 0}"
+                                  class="badge text-bg-success">
+                                Disponível
+                            </span>
+
+                            <span th:unless="${produto.quantidadeEstoque > 0}"
+                                  class="badge text-bg-secondary">
+                                Esgotado
+                            </span>
+
+                        </div>
+
+                        <!-- ACESSO À COMPRA -->
+                        <div class="mt-3">
+
+                            <!-- CLIENTE LOGADO -->
+                            <div sec:authorize="hasRole('CLIENTE')">
+
+                                <form th:if="${produto.quantidadeEstoque > 0}"
+                                      th:action="@{/cliente/carrinho/adicionar/{id}(id=${produto.id})}"
+                                      method="post">
+
+                                    <input type="hidden"
+                                           name="quantidade"
+                                           value="1">
+
+                                    <button type="submit"
+                                            class="btn btn-primary w-100">
+                                        Adicionar ao carrinho
+                                    </button>
+
+                                </form>
+
+                                <button th:unless="${produto.quantidadeEstoque > 0}"
+                                        type="button"
+                                        class="btn btn-secondary w-100"
+                                        disabled>
+                                    Produto esgotado
+                                </button>
+
+                            </div>
+
+                            <!-- VISITANTE -->
+                            <a th:href="@{/login}"
+                               class="btn btn-outline-primary w-100"
+                               sec:authorize="!isAuthenticated()">
+                                Entre para comprar
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- NENHUM PRODUTO -->
+            <div class="col-12"
+                 th:if="${#lists.isEmpty(produtos)}">
+
+                <div class="alert alert-info text-center">
+                    Nenhum produto disponível no momento.
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ACESSO AO CARRINHO -->
+    <div class="text-center mt-5"
+         sec:authorize="hasRole('CLIENTE')">
+
+        <a th:href="@{/cliente/carrinho}"
+           class="btn btn-outline-dark">
+            Ver meu carrinho
+        </a>
+
+    </div>
+
+</main>
+
+<!-- FOOTER -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>
