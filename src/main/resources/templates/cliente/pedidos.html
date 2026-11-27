@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Meus pedidos | Pão & Felicidade</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/bootstrap/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+</head>
+
+<body class="bg-light">
+
+<div th:replace="~{fragments/menu :: menu}"></div>
+
+<main class="container py-5">
+
+    <div class="mb-4">
+        <h1 class="fw-bold">Meus pedidos</h1>
+
+        <p class="text-muted">
+            Acompanhe seus pedidos e confira os produtos comprados.
+        </p>
+    </div>
+
+    <!-- QUANDO NÃO EXISTIR PEDIDO -->
+    <div th:if="${#lists.isEmpty(pedidos)}"
+         class="card shadow-sm border-0">
+
+        <div class="card-body text-center py-5">
+
+            <h4 class="fw-bold">
+                Você ainda não realizou nenhum pedido.
+            </h4>
+
+            <p class="text-muted">
+                Quando fizer seu primeiro pedido, ele aparecerá aqui.
+            </p>
+
+            <a th:href="@{/cardapio}"
+               class="btn btn-success mt-2">
+                Ver cardápio
+            </a>
+
+        </div>
+    </div>
+
+    <!-- LISTA DE PEDIDOS -->
+    <div th:if="${!#lists.isEmpty(pedidos)}">
+
+        <div th:each="pedido : ${pedidos}"
+             class="card shadow-sm border-0 mb-4">
+
+            <div class="card-body">
+
+                <div class="row align-items-center g-3">
+
+                    <!-- NÚMERO E DATA -->
+                    <div class="col-md-3">
+
+                        <small class="text-muted">
+                            Pedido
+                        </small>
+
+                        <h5 class="fw-bold mb-1">
+                            #<span th:text="${pedido.id}"></span>
+                        </h5>
+
+                        <small class="text-muted"
+                               th:text="${#temporals.format(pedido.dataPedido, 'dd/MM/yyyy HH:mm')}">
+                        </small>
+
+                    </div>
+
+                    <!-- VALOR -->
+                    <div class="col-md-2">
+
+                        <small class="text-muted">
+                            Valor total
+                        </small>
+
+                        <h5 class="fw-bold text-success mb-0">
+                            R$
+                            <span th:text="${#numbers.formatDecimal(pedido.valorTotal, 1, 'POINT', 2, 'COMMA')}"></span>
+                        </h5>
+
+                    </div>
+
+                    <!-- RECEBIMENTO -->
+                    <div class="col-md-2">
+
+                        <small class="text-muted">
+                            Recebimento
+                        </small>
+
+                        <p class="mb-0 fw-semibold"
+                           th:text="${pedido.tipoRecebimento}">
+                        </p>
+
+                    </div>
+
+                    <!-- PAGAMENTO -->
+                    <div class="col-md-2">
+
+                        <small class="text-muted">
+                            Pagamento
+                        </small>
+
+                        <p class="mb-0 fw-semibold"
+                           th:text="${pedido.formaPagamento}">
+                        </p>
+
+                    </div>
+
+                    <!-- STATUS -->
+                    <div class="col-md-3">
+
+                        <small class="text-muted d-block mb-2">
+                            Status do pedido
+                        </small>
+                        <!-- STATUS PENDENTE -->
+                        <span th:if="${pedido.status.name() == 'PENDENTE'}"
+                              class="badge bg-warning text-dark">
+    PENDENTE
+</span>
+
+                        <!-- STATUS EM PREPARAÇÃO -->
+                        <span th:if="${pedido.status.name() == 'EM_PREPARACAO'}"
+                              class="badge bg-info text-dark">
+    EM PREPARAÇÃO
+</span>
+
+                        <!-- STATUS PRONTO -->
+                        <span th:if="${pedido.status.name() == 'PRONTO'}"
+                              class="badge bg-primary">
+    PRONTO
+</span>
+
+                        <!-- STATUS SAIU PARA ENTREGA -->
+                        <span th:if="${pedido.status.name() == 'SAIU_PARA_ENTREGA'}"
+                              class="badge bg-secondary">
+                            SAIU PARA ENTREGA
+                        </span>
+
+                        <!-- STATUS ENTREGUE -->
+                        <span th:if="${pedido.status.name() == 'ENTREGUE'}"
+                              class="badge bg-success">
+                            ENTREGUE
+                        </span>
+
+                        <!-- STATUS CANCELADO -->
+                        <span th:if="${pedido.status.name() == 'CANCELADO'}"
+                              class="badge bg-danger">
+                            CANCELADO
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <!-- BOTÃO DE DETALHES -->
+                <div class="text-end">
+
+                    <button type="button"
+                            class="btn btn-outline-success"
+                            data-bs-toggle="modal"
+                            th:attr="data-bs-target='#modalPedido-' + ${pedido.id}">
+
+                        Ver detalhes
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- MODAL DE DETALHES DO PEDIDO -->
+            <div class="modal fade"
+                 tabindex="-1"
+                 aria-hidden="true"
+                 th:id="'modalPedido-' + ${pedido.id}">
+
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+
+                            <div>
+                                <h5 class="modal-title fw-bold">
+                                    Detalhes do pedido
+                                    #<span th:text="${pedido.id}"></span>
+                                </h5>
+
+                                <small class="text-muted"
+                                       th:text="${#temporals.format(pedido.dataPedido, 'dd/MM/yyyy HH:mm')}">
+                                </small>
+                            </div>
+
+                            <button type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Fechar">
+                            </button>
+
+                        </div>
+
+                        <div class="modal-body">
+
+                            <h6 class="fw-bold mb-3">
+                                Produtos comprados
+                            </h6>
+
+                            <div class="table-responsive">
+
+                                <table class="table align-middle">
+
+                                    <thead class="table-light">
+
+                                    <tr>
+                                        <th>Produto</th>
+                                        <th>Quantidade</th>
+                                        <th>Preço unitário</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+
+                                    </thead>
+
+                                    <tbody>
+
+                                    <tr th:each="item : ${pedido.itens}">
+
+                                        <td th:text="${item.produto.nome}">
+                                        </td>
+
+                                        <td th:text="${item.quantidade}">
+                                        </td>
+
+                                        <td>
+                                            R$
+                                            <span th:text="${#numbers.formatDecimal(item.precoUnitario, 1, 'POINT', 2, 'COMMA')}"></span>
+                                        </td>
+
+                                        <td class="fw-semibold">
+                                            R$
+                                            <span th:text="${#numbers.formatDecimal(item.subtotal, 1, 'POINT', 2, 'COMMA')}"></span>
+                                        </td>
+
+                                    </tr>
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                            <hr>
+
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+
+                                    <small class="text-muted">
+                                        Forma de recebimento
+                                    </small>
+
+                                    <p class="fw-semibold mb-0"
+                                       th:text="${pedido.tipoRecebimento}">
+                                    </p>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <small class="text-muted">
+                                        Forma de pagamento
+                                    </small>
+
+                                    <p class="fw-semibold mb-0"
+                                       th:text="${pedido.formaPagamento}">
+                                    </p>
+
+                                </div>
+
+                                <div class="col-12">
+
+                                    <small class="text-muted">
+                                        Status atual
+                                    </small>
+
+                                    <p class="fw-bold mb-0"
+                                       th:text="${pedido.status}">
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <div class="me-auto">
+
+                                <strong>
+                                    Total do pedido:
+                                    <span class="text-success">
+                                        R$
+                                        <span th:text="${#numbers.formatDecimal(pedido.valorTotal, 1, 'POINT', 2, 'COMMA')}"></span>
+                                    </span>
+                                </strong>
+
+                            </div>
+
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+                                Fechar
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>
